@@ -6,7 +6,10 @@ A tap-the-matching-picture game for toddlers. Installable PWA, works offline, no
 ```
 cd peyda-kon && python3 -m http.server 8080
 ```
-Open `http://<your-computer-ip>:8080` on the phone. Installing and the service worker need HTTPS (or localhost), so deploy to any static host (Cloudflare Pages, Netlify, GitHub Pages) and use "Add to Home Screen".
+Open `http://<your-computer-ip>:8080` on the phone. Installing and offline play need HTTPS.
+
+## Live
+https://peyda-kon.aliab.workers.dev (Cloudflare Workers static assets). To redeploy, copy the game files into `public/` next to a `wrangler.jsonc` that has `"assets": { "directory": "./public" }`, then run `npx wrangler deploy`.
 
 ## Gameplay
 - A target picture is shown on the card, and the child taps the same picture in the scene.
