@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fa">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#7c5cff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="پیدا کن">
+  <meta name="format-detection" content="telephone=no">
+  <title>پیدا کن! 🐞</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="game">
+    <section id="targetPanel">
+      <div id="levelBadge">⭐ <span id="levelNum">۱</span></div>
+      <div id="targetCard"><div id="target"></div></div>
+      <div id="progress"></div>
+    </section>
+    <section id="scene">
+      <svg id="doodles" aria-hidden="true"></svg>
+      <div id="items"></div>
+    </section>
+  </main>
+
+  <button id="muteBtn" aria-label="صدا">🔊</button>
+
+  <div id="cheer" hidden><div class="cheerText">آفرین!<br><span>👏👏👏</span></div></div>
+
+  <div id="wipe" hidden>
+    <div class="curtain"><div class="curtainText"></div></div>
+    <div class="runner"></div>
+  </div>
+
+  <canvas id="fx"></canvas>
+
+  <div id="start">
+    <div class="floaties" aria-hidden="true">
+      <span>🐞</span><span>🎈</span><span>🐟</span><span>🌷</span><span>🧸</span><span>🍓</span><span>🦆</span><span>🚗</span>
+    </div>
+    <h1>پیدا کن!</h1>
+    <button id="playBtn" aria-label="شروع">
+      <svg viewBox="0 0 100 100"><path d="M36 24 L78 50 L36 76 Z" fill="#fff" stroke="#fff" stroke-width="10" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="installBtn" hidden>📲 نصب بازی</button>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
