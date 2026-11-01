@@ -1,5 +1,5 @@
 // Offline-first: serve from cache instantly, refresh the cache in the background.
-const CACHE = 'peyda-kon-v2';
+const CACHE = 'peyda-kon-v3';
 const ASSETS = [
   './', './css/style.css', './manifest.webmanifest',
   './js/main.js', './js/audio.js', './js/fx.js', './js/data.js',

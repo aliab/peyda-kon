@@ -468,3 +468,12 @@ button:focus { outline: none; }
   #start h1 { font-size: 13vmin; }
   #playBtn { width: 28vmin; height: 28vmin; }
 }
+
+/* iOS home-screen apps: WebKit can resolve `inset: 0` / `height: 100%` a strip
+   short of the screen, leaving a blank band at the bottom. 100vh is the full
+   screen there (but not in a Safari tab, hence the display-mode guard). */
+@media (display-mode: standalone), (display-mode: fullscreen) {
+  html, body { height: 100vh; }
+  #game, #start, #wipe, #cheer, #fx { height: 100vh; }
+}
+html { background: #c9a7ff; }

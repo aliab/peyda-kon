@@ -16,8 +16,9 @@ export class FX {
 
   resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.w = innerWidth;
-    this.h = innerHeight;
+    // Measure the canvas itself: on iOS home-screen apps innerHeight can be short.
+    this.w = this.c.clientWidth || innerWidth;
+    this.h = this.c.clientHeight || innerHeight;
     this.c.width = Math.round(this.w * dpr);
     this.c.height = Math.round(this.h * dpr);
     this.g.setTransform(dpr, 0, 0, dpr, 0, 0);
