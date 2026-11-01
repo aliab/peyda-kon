@@ -454,8 +454,23 @@ el.installBtn.addEventListener('click', async () => {
   el.installBtn.hidden = true;
 });
 
+// Updates: iOS often resumes a home-screen app instead of relaunching it, so check
+// for a new version whenever the app comes back, and reload into it when safe.
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  const hadController = !!navigator.serviceWorker.controller;
+  let updateReady = false;
+  addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' });
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); });
+    } catch { /* offline or unsupported */ }
+  });
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadController) return; // first install, already running the latest files
+    if (!state.started) location.reload(); // still on the start screen
+    else updateReady = true; // mid-game: wait until the app is put away
+  });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && updateReady) location.reload(); });
 }
 
 applyLevelLook();
