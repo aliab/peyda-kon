@@ -4,12 +4,24 @@ A tap-the-matching-picture game for toddlers. Installable PWA, works offline, no
 
 ## Run
 ```
-cd peyda-kon && python3 -m http.server 8080
+cd peyda-kon/public && python3 -m http.server 8080
 ```
 Open `http://<your-computer-ip>:8080` on the phone. Installing and offline play need HTTPS.
 
 ## Live
-https://peyda-kon.aliab.workers.dev (Cloudflare Workers static assets). To redeploy, copy the game files into `public/` next to a `wrangler.jsonc` that has `"assets": { "directory": "./public" }`, then run `npx wrangler deploy`.
+https://peyda-kon.aliab.workers.dev, served by Cloudflare Workers static assets from `public/`.
+
+## Release
+Push a version tag to deploy:
+```
+git tag v1.0.1 && git push origin v1.0.1
+```
+`.github/workflows/release.yml` then:
+1. Sets the service worker cache name to the tag, so installed copies update.
+2. Deploys `public/` to Cloudflare with `wrangler deploy`.
+3. Creates a GitHub release with auto-generated notes.
+
+Required repo secrets: `CLOUDFLARE_API_TOKEN` (an "Edit Cloudflare Workers" token) and `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Gameplay
 - A target picture is shown on the card, and the child taps the same picture in the scene.
@@ -20,5 +32,5 @@ https://peyda-kon.aliab.workers.dev (Cloudflare Workers static assets). To redep
 
 ## Notes
 - All sounds and music are synthesised with Web Audio in `js/audio.js`, so there are no audio files.
-- When you change any file, bump `CACHE` in `sw.js` so installed copies update.
+- Releases bump the service worker cache name automatically. For a manual `npx wrangler deploy`, bump `CACHE` in `public/sw.js` yourself.
 - The level is saved in `localStorage` (`pk-level`). To reset: `localStorage.removeItem('pk-level')`.

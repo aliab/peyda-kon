@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "peyda-kon",
+  "compatibility_date": "2026-10-15",
+  // Static site: everything in public/ is served as-is.
+  "assets": { "directory": "./public", "not_found_handling": "single-page-application" }
+}
