@@ -47,7 +47,12 @@
     <button id="playBtn" aria-label="شروع">
       <svg viewBox="0 0 100 100"><path d="M36 24 L78 50 L36 76 Z" fill="#fff" stroke="#fff" stroke-width="10" stroke-linejoin="round"/></svg>
     </button>
-    <button id="installBtn" hidden>📲 نصب بازی</button>
+    <div id="resumeInfo" hidden>ادامه از مرحله <b></b></div>
+    <div class="startActions">
+      <button id="restartBtn" hidden>🔄 شروع از اول</button>
+      <button id="installBtn" hidden>📲 نصب بازی</button>
+    </div>
+    <div id="record" hidden>🏆 رکورد: مرحله <b></b></div>
   </div>
 
   <script type="module" src="js/main.js"></script>

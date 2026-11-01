@@ -317,7 +317,7 @@ button:focus { outline: none; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5vmin;
+  gap: 3.5vmin;
   overflow: hidden;
   background: linear-gradient(160deg, #8fd3ff, #c9a7ff 60%, #ff9ecd);
   transition: opacity .45s, transform .45s;
@@ -345,7 +345,25 @@ button:focus { outline: none; }
 }
 #playBtn svg { width: 55%; height: 55%; margin-left: 6%; }
 #playBtn:active { transform: translateY(1.5vmin) scale(.95); box-shadow: 0 .5vmin 0 #c2185b; animation: none; }
-#installBtn {
+#resumeInfo, #record {
+  direction: rtl;
+  font-size: max(16px, 4vmin);
+  font-weight: 900;
+  color: #fff;
+  -webkit-text-stroke: .5vmin var(--ink);
+  paint-order: stroke fill;
+}
+#record {
+  padding: .35em 1em;
+  border-radius: 99px;
+  background: rgba(0, 0, 0, .18);
+  -webkit-text-stroke: 0;
+  font-size: max(15px, 3.4vmin);
+}
+.startActions { display: flex; gap: 3vmin; flex-wrap: wrap; justify-content: center; }
+.startActions:not(:has(button:not([hidden]))) { display: none; }
+#installBtn, #restartBtn {
+  direction: rtl;
   padding: .6em 1.2em;
   border-radius: 99px;
   background: rgba(255, 255, 255, .85);
@@ -443,4 +461,10 @@ button:focus { outline: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .item .bob, #targetCard, .floaties span { animation: none !important; }
+}
+
+@media (orientation: landscape) {
+  #start { gap: 2.5vmin; }
+  #start h1 { font-size: 13vmin; }
+  #playBtn { width: 28vmin; height: 28vmin; }
 }

@@ -29,6 +29,7 @@ const el = {
   target: $('#target'), targetCard: $('#targetCard'), progress: $('#progress'), levelNum: $('#levelNum'),
   wipe: $('#wipe'), curtainText: $('#wipe .curtainText'), runner: $('#wipe .runner'),
   cheer: $('#cheer'), start: $('#start'), playBtn: $('#playBtn'), installBtn: $('#installBtn'), muteBtn: $('#muteBtn'),
+  restartBtn: $('#restartBtn'), resumeInfo: $('#resumeInfo'), record: $('#record'),
 };
 
 const sound = new Sound();
@@ -36,6 +37,8 @@ const fx = new FX($('#fx'));
 
 const state = {
   level: Math.max(1, parseInt(localStorage.getItem('pk-level'), 10) || 1),
+  best: Math.max(1, parseInt(localStorage.getItem('pk-best'), 10) || 1),
+  started: false,
   progress: 0,
   target: null,
   lastTarget: null,
@@ -332,6 +335,10 @@ async function wipeTransition() {
   // Screen is covered: swap to the new level behind the curtain.
   state.level = next;
   localStorage.setItem('pk-level', String(next));
+  if (next > state.best) {
+    state.best = next;
+    localStorage.setItem('pk-best', String(next));
+  }
   state.progress = 0;
   state.nodes = [];
   el.items.replaceChildren();
@@ -358,7 +365,25 @@ async function wipeTransition() {
 
 // ---------- start / platform ----------
 
-async function start() {
+function renderStartScreen() {
+  // Older saves only stored the level, so count it toward the record too.
+  state.best = Math.max(state.best, state.level);
+  const resuming = state.level > 1;
+  el.resumeInfo.hidden = !resuming;
+  el.resumeInfo.querySelector('b').textContent = fa(state.level);
+  el.restartBtn.hidden = !resuming;
+  el.record.hidden = state.best <= 1;
+  el.record.querySelector('b').textContent = fa(state.best);
+}
+
+async function start({ fromBeginning = false } = {}) {
+  if (state.started) return;
+  state.started = true;
+  if (fromBeginning) {
+    state.level = 1;
+    state.progress = 0;
+    localStorage.setItem('pk-level', '1');
+  }
   sound.unlock();
   sound.startMusic();
   const de = document.documentElement;
@@ -389,7 +414,8 @@ function updateMuteBtn() {
   el.muteBtn.textContent = sound.muted ? '🔇' : '🔊';
 }
 
-el.playBtn.addEventListener('click', start, { once: true });
+el.playBtn.addEventListener('click', () => start());
+el.restartBtn.addEventListener('click', () => start({ fromBeginning: true }));
 el.items.addEventListener('pointerdown', onPointerDown);
 el.muteBtn.addEventListener('click', () => {
   sound.unlock();
@@ -434,3 +460,4 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
 
 applyLevelLook();
 renderProgress();
+renderStartScreen();
